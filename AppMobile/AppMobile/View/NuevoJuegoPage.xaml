@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage NavigationPage.HasBackButton="False"
+             NavigationPage.HasNavigationBar="False"
+             xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="AppMobile.View.NuevoJuegoPage">
+    
+    <ContentPage.Content>
+        <Grid Margin="26">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*" />
+                <RowDefinition Height=".5*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <ActivityIndicator IsRunning="{Binding IsBusy}"
+                               Grid.Row="0"
+                               Grid.Column="0"
+                               Grid.RowSpan="5"
+                               Grid.ColumnSpan="2"
+                               VerticalOptions="Center"
+                               HorizontalOptions="Center"
+                               Color="Orange"/>
+
+            <Label Text="Nuevo juego"
+                   Style="{StaticResource TitleStyle}"
+                   Grid.Row="0"
+                   Grid.Column="0"
+                   Grid.ColumnSpan="2"
+                   LineBreakMode="NoWrap"
+                   HorizontalTextAlignment="Center" />
+
+            <Label Text="Ingrese su nombre en el recuadro"
+                   Style="{StaticResource CharacterColorL}"
+                   Grid.Row="1"
+                   Grid.Column="0"
+                   Grid.ColumnSpan="2"
+                   LineBreakMode="NoWrap"
+                   HorizontalTextAlignment="Center" />
+              
+            <Entry Placeholder="  Ingrese nombre aqui...  "
+                   x:Name="TextEditor"
+                   Text=""
+                   MaxLength="10"
+                   HorizontalOptions="Center"
+                   TextColor="Black"
+                   BackgroundColor="White"
+                   Grid.Row="3"
+                   Grid.Column="0"
+                   Grid.ColumnSpan="2" />
+
+            <Label Text="Mínimo 3 caracteres, máximo 10"
+                   Style="{StaticResource CharacterColorL}"
+                   Grid.Row="4"
+                   Grid.Column="0"
+                   Grid.ColumnSpan="2"
+                   LineBreakMode="NoWrap"
+                   FontSize="Micro"
+                   HorizontalTextAlignment="Center" />
+
+            
+            <ImageButton x:Name="Volver"
+                         Grid.Row="5"
+                         Grid.Column="0"
+                         HorizontalOptions="Center"
+                         Clicked="Volver_Clicked"
+                         Style="{StaticResource BotonFlecha}"/>
+
+            <Label x:Name="LabelVolver"
+                   Text="Volver"
+                   Grid.Row="6"
+                   Grid.Column="0"
+                   HorizontalTextAlignment="Center"
+                   Style="{StaticResource CharacterColorL}"
+                   LineBreakMode="NoWrap"
+                   FontSize="Micro" />
+
+            <ImageButton x:Name="Continuar"
+                         Grid.Row="5"
+                         Grid.Column="1"
+                         HorizontalOptions="Center"
+                         Clicked="Continuar_Clicked"
+                         Style="{StaticResource BotonFlecha}"
+                         RotationY="180" />
+
+            <Label  Text="Continuar"
+                    Grid.Row="6"
+                    Grid.Column="1"
+                    HorizontalTextAlignment="Center"
+                    Style="{StaticResource CharacterColorL}"
+                    LineBreakMode="NoWrap"
+                    FontSize="Micro" />
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

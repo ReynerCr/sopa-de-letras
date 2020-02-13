@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage NavigationPage.HasBackButton="False"
+             NavigationPage.HasNavigationBar="False"
+             xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:AppMobile.ViewModels"
+             mc:Ignorable="d"
+             x:Class="AppMobile.View.InstruccionesPage"
+             BackgroundColor="#ffe7b3">
+    <ContentPage.Resources>
+        <Style TargetType="Label">
+            <Setter Property="TextColor" Value="{StaticResource CharacterColorL}"/>
+        </Style>
+    </ContentPage.Resources>
+    
+    <ContentPage.Content>
+        <StackLayout Margin="20">
+            <Label Text="Instrucciones (juego)"
+                   VerticalOptions="StartAndExpand" 
+                   LineBreakMode="NoWrap"
+                   HorizontalOptions="CenterAndExpand"
+                   FontAttributes="Bold"
+                   FontSize="Large"
+                   TextColor="#2a2a2a"/>
+
+            <!-- Instrucciones en una lista scrollable -->
+            <CollectionView VerticalScrollBarVisibility="Always"
+                            ItemsSource="{Binding TextoInstrucciones}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Label Text="{Binding Texto}"/>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+                
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="30"/>
+                </CollectionView.ItemsLayout>
+            </CollectionView>
+            
+            <StackLayout HorizontalOptions="Start">
+                <ImageButton x:Name="Volver"
+                        HorizontalOptions="Start"
+                        Clicked="Volver_Clicked"
+                        Style="{StaticResource BotonFlecha}"/>
+
+                <Label x:Name="LabelVolver"
+                       Text="Volver"
+                       HorizontalOptions="Center"
+                       LineBreakMode="NoWrap"
+                       TextColor="#2a2a2a"
+                       FontSize="Micro" />
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

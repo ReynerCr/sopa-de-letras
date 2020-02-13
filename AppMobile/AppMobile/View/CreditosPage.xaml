@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage NavigationPage.HasBackButton="False"
+             NavigationPage.HasNavigationBar="False"
+             xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="AppMobile.View.CreditosPage">
+    <ContentPage.Content>
+        <StackLayout Margin="20">
+            
+            <Label Text="Créditos"
+                   VerticalOptions="StartAndExpand"
+                   HorizontalTextAlignment="Center"
+                   LineBreakMode="NoWrap"
+                   Style="{StaticResource TitleStyle}" />
+
+            <FlexLayout Direction="Column"
+                        AlignItems="Center"
+                        JustifyContent="SpaceEvenly"
+                        VerticalOptions="Center">
+                
+                <Label Text="Contreras Reyner;"
+                       LineBreakMode="NoWrap"
+                       Style="{StaticResource CharacterColorL}" />
+                
+                <Label Text="C.I: V.-26934400"
+                       LineBreakMode="NoWrap"
+                       Style="{StaticResource CharacterColorL}" />
+
+                <Label LineBreakMode="NoWrap"/>
+                
+                <Label Text="Llanes John;"
+                       LineBreakMode="NoWrap"
+                       Style="{StaticResource CharacterColorL}" />
+
+                <Label Text="C.I: V.-30853320"
+                       LineBreakMode="NoWrap"
+                       Style="{StaticResource CharacterColorL}" />
+
+                <Label LineBreakMode="NoWrap"/>
+
+                <Label Text="Programación II Sección 2."
+                       Style="{StaticResource CharacterColorL}" />
+            </FlexLayout>
+
+            <Label LineBreakMode="NoWrap" VerticalOptions="CenterAndExpand"/>
+
+            <StackLayout HorizontalOptions="Start">
+                <ImageButton x:Name="Volver"
+                        HorizontalOptions="Start"
+                        Clicked="Volver_Clicked"
+                        Style="{StaticResource BotonFlecha}"/>
+
+                <Label x:Name="LabelVolver"
+                       Text="Volver"
+                       HorizontalTextAlignment="Center"
+                       LineBreakMode="NoWrap"
+                       Style="{StaticResource CharacterColorL}"
+                       FontSize="Micro" />
+            </StackLayout>
+
+            <Label Text="Versión 0.9"
+                   LineBreakMode="NoWrap"
+                   HorizontalTextAlignment="Center"
+                   Style="{StaticResource CharacterColorL}" />
+        </StackLayout>  
+    </ContentPage.Content>
+</ContentPage>

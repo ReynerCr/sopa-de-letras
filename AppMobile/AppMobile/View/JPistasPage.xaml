@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage NavigationPage.HasBackButton="False"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="#2a2a2a"
+             xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="AppMobile.View.JPistasPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label">
+                <Setter Property="TextColor" Value="White"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
+    <ContentPage.Content>
+        <StackLayout Margin="20">
+            <!-- Botones para las pistas -->
+            <Button Text="Descubrir una palabra"
+                    TextColor="White"
+                    BackgroundColor="Transparent"
+                    x:Name="DescubrirPalabra"
+                    Clicked="DescubrirPalabra_Clicked"/>
+
+            <Button Text="Descubrir una letra"
+                    TextColor="White"
+                    BackgroundColor="Transparent"
+                    x:Name="DescubrirLetra"
+                    Clicked="DescubrirLetra_Clicked"/>
+
+            <Label LineBreakMode="NoWrap"/>
+            
+            <!-- Lista de palabras -->
+            <Label Text="Lista de palabras:"
+                   LineBreakMode="NoWrap"
+                   HorizontalTextAlignment="Center"/>
+
+            <FlexLayout x:Name="ListaPalabrasLayout"
+                        Direction="Column"
+                        JustifyContent="SpaceBetween"/>
+
+            <Label LineBreakMode="NoWrap" VerticalOptions="CenterAndExpand"/>
+            
+            <!-- volver -->
+            <StackLayout HorizontalOptions="Start"
+                         VerticalOptions="End">
+                <ImageButton x:Name="Volver"
+                        HorizontalOptions="Start"
+                        Clicked="Volver_Clicked"
+                        Style="{StaticResource BotonFlecha}"/>
+
+                <Label Text="Volver"
+                       HorizontalTextAlignment="Center"
+                       TextColor="White"
+                       LineBreakMode="NoWrap"
+                       Style="{StaticResource CharacterColorL}"
+                       FontSize="Micro" />
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

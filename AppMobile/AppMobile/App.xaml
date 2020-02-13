@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Application xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="AppMobile.App">
+    
+    <Application.Resources>
+        <ResourceDictionary>
+            <Style TargetType="NavigationPage">
+                <Setter Property="BackgroundColor" Value="{Binding MainMenuBkgColor}" />
+            </Style>
+
+            <Style x:Key="MenuVisualElementStyle" TargetType="View" ApplyToDerivedTypes="true">
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+                <Setter Property="BackgroundColor" Value="Transparent"/>
+            </Style>
+
+            <Style x:Key="CharacterColorB" TargetType="Button" BasedOn="{StaticResource MenuVisualElementStyle}">
+                <Setter Property="TextColor" Value="{Binding CharColorAndSecondaryBkg}"/>
+                <Setter Property="BorderWidth" Value="0"/>
+                <Setter Property="FontSize" Value="Small" />
+            </Style>
+
+            <Style x:Key="CharacterColorL" TargetType="Label">
+                <Setter Property="TextColor" Value="{Binding CharColorAndSecondaryBkg}"/>
+                <Setter Property="FontSize" Value="Small" />
+            </Style>
+
+            <Style x:Key="BotonFlecha" TargetType="ImageButton">
+                <Setter Property="WidthRequest" Value="70"/>
+                <Setter Property="HeightRequest" Value="60"/>
+            </Style>
+
+            <Style x:Key="TitleStyle" TargetType="Label" BaseResourceKey="CharacterColorL">
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="FontSize" Value="Large" />
+            </Style>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
