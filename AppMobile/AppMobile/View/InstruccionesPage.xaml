@@ -5,52 +5,73 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:local="clr-namespace:AppMobile.ViewModels"
              mc:Ignorable="d"
              x:Class="AppMobile.View.InstruccionesPage"
-             BackgroundColor="#ffe7b3">
+             BackgroundColor="{Binding MainMenuBkgColor}">
     <ContentPage.Resources>
         <Style TargetType="Label">
             <Setter Property="TextColor" Value="{StaticResource CharacterColorL}"/>
         </Style>
     </ContentPage.Resources>
-    
+
     <ContentPage.Content>
-        <StackLayout Margin="20">
-            <Label Text="Instrucciones (juego)"
-                   VerticalOptions="StartAndExpand" 
-                   LineBreakMode="NoWrap"
-                   HorizontalOptions="CenterAndExpand"
-                   FontAttributes="Bold"
-                   FontSize="Large"
-                   TextColor="#2a2a2a"/>
+        <StackLayout
+            Margin="20">
+            <Label
+                Text="Instrucciones"
+                Style="{StaticResource TitleStyle}" />
 
-            <!-- Instrucciones en una lista scrollable -->
-            <CollectionView VerticalScrollBarVisibility="Always"
-                            ItemsSource="{Binding TextoInstrucciones}">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Label Text="{Binding Texto}"/>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-                
-                <CollectionView.ItemsLayout>
-                    <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="30"/>
-                </CollectionView.ItemsLayout>
-            </CollectionView>
-            
-            <StackLayout HorizontalOptions="Start">
-                <ImageButton x:Name="Volver"
-                        HorizontalOptions="Start"
-                        Clicked="Volver_Clicked"
-                        Style="{StaticResource BotonFlecha}"/>
+            <!-- Instrucciones -->
+            <ScrollView
+                Margin="10"
+                VerticalOptions="FillAndExpand"
+                BackgroundColor="{Binding MainMenuBkgColor}">
+                <StackLayout>
+                    <Label Text="Para poder marcar las palabras se debe tocar en orden letra a letra hasta formarla, luego se debe presionar el botón de comprobar (palomita de confirmado) para verificar si es correcta o no."
+                           Style="{StaticResource CharacterColorL}"
+                           LineBreakMode="WordWrap"
+                           Margin="5" />
+                    <Label Text="El botón de limpiar (una x) se usa para desactivar las letras que se encuentran marcadas."
+                           Style="{StaticResource CharacterColorL}"
+                           LineBreakMode="WordWrap"
+                           Margin="5" />
+                    <Label Text="En la parte superior izquierda se encuentra el botón para acceder al menú de pistas, donde se encuentran los botones para activar dichas pistas y también está la lista de palabras que se deben encontrar."
+                           Style="{StaticResource CharacterColorL}"
+                           LineBreakMode="WordWrap"
+                           Margin="5" />
+                    <Label Text="En la parte superior derecha se encuentra el botón de configuraciones, donde se puede reiniciar el tablero o volver al menú (no guarda el tablero actual ni el puntaje actual)."
+                           Style="{StaticResource CharacterColorL}"
+                           LineBreakMode="WordWrap"
+                           Margin="5" />
+                    <Label Text="Abajo se encuentra el tema de las palabras del nivel actual, el puntaje actual, y el puntaje requerido para pasar al siguiente nivel."
+                           Style="{StaticResource CharacterColorL}"
+                           LineBreakMode="WordWrap"
+                           Margin="5" />
+                </StackLayout>
+            </ScrollView>
 
-                <Label x:Name="LabelVolver"
-                       Text="Volver"
-                       HorizontalOptions="Center"
-                       LineBreakMode="NoWrap"
-                       TextColor="#2a2a2a"
-                       FontSize="Micro" />
+            <!-- Boton volver -->
+            <StackLayout
+                HorizontalOptions="Start">
+                <Grid
+                    WidthRequest="70"
+                    HeightRequest="60">
+                    <Image
+                        WidthRequest="70"
+                        HeightRequest="60"
+                        Source="{Binding BotonFlecha}"
+                        InputTransparent="True" />
+                    <Button
+                        WidthRequest="70"
+                        HeightRequest="60"
+                        Style="{DynamicResource CharacterColorB}"
+                        Clicked="Volver_Clicked" />
+                </Grid>
+                <Button
+                    Text="Volver"
+                    Style="{DynamicResource CharacterColorB}"
+                    Clicked="Volver_Clicked"
+                    FontSize="Micro" />
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>

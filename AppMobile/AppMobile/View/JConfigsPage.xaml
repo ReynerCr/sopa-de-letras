@@ -1,53 +1,78 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage NavigationPage.HasBackButton="False"
              NavigationPage.HasNavigationBar="False"
-             BackgroundColor="#2a2a2a"
              xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="AppMobile.View.JConfigsPage">
+             x:Class="AppMobile.View.JConfigsPage"
+             BackgroundColor="#2a2a2a">
     <ContentPage.Content>
+        <Grid>
+            <StackLayout
+                Margin="20">
 
-        <StackLayout Margin="20">
-            <!-- Botones para las configs -->
-            <Button Text="Volver al menú"
+                <!-- Botones para las configs -->
+                <Button
+                    Text="Volver al menú"
                     BackgroundColor="Transparent"
                     TextColor="White"
                     Clicked="VolverMenu_Clicked"
-                    HorizontalOptions="Center"/>
-
-            <Button Text="Reiniciar tablero"
+                    HorizontalOptions="Center"
+                    BorderColor="Transparent" />
+                <Button
+                    Text="Reiniciar tablero"
                     BackgroundColor="Transparent"
                     TextColor="White"
                     Clicked="Reiniciar_Clicked"
-                    HorizontalOptions="Center"/>
+                    HorizontalOptions="Center"
+                    BorderColor="Transparent" />
+                <Label
+                    LineBreakMode="NoWrap"
+                    VerticalOptions="CenterAndExpand" />
 
-            <Label LineBreakMode="NoWrap" VerticalOptions="CenterAndExpand"/>
-            
-            <!-- Etiqueta con nombre de usuario -->
-            <Label Text="{Binding DisplayNombre}"
-                   TextColor="White"
-                   HorizontalTextAlignment="Center"/>
+                <!-- Etiqueta con nombre de usuario -->
+                <Label
+                    Text="{Binding DisplayNombre}"
+                    TextColor="White"
+                    HorizontalTextAlignment="Center" />
+                <Label
+                    LineBreakMode="NoWrap"
+                    VerticalOptions="CenterAndExpand" />
 
-            <Label LineBreakMode="NoWrap" VerticalOptions="CenterAndExpand"/>
-
-            <!-- volver -->
-            <StackLayout HorizontalOptions="Start"
-                         VerticalOptions="End">
-                <ImageButton x:Name="Volver"
-                        HorizontalOptions="Start"
+                <!-- Boton volver -->
+                <StackLayout
+                    HorizontalOptions="Start">
+                    <Grid
+                        WidthRequest="70"
+                        HeightRequest="60">
+                        <Image
+                            WidthRequest="70"
+                            HeightRequest="60"
+                            Source="{Binding BotonFlecha}"
+                            InputTransparent="True" />
+                        <Button
+                            WidthRequest="70"
+                            HeightRequest="60"
+                            Style="{DynamicResource CharacterColorB}"
+                            Clicked="Volver_Clicked" />
+                    </Grid>
+                    <Button
+                        Text="Volver"
+                        Style="{DynamicResource CharacterColorB}"
+                        TextColor="White"
                         Clicked="Volver_Clicked"
-                        Style="{StaticResource BotonFlecha}"/>
-
-                <Label x:Name="LabelVolver"
-                       Text="Volver"
-                       HorizontalTextAlignment="Center"
-                       LineBreakMode="NoWrap"
-                       TextColor="White"
-                       FontSize="Micro" />
+                        FontSize="Micro" />
+                </StackLayout>
             </StackLayout>
-        </StackLayout>
+
+            <ActivityIndicator
+                IsRunning="{Binding IsBusy}"
+                IsVisible="{Binding IsBusy}"
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                Color="Orange" />
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

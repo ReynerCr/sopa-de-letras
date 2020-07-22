@@ -5,13 +5,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="AppMobile.App">
-    
+
     <Application.Resources>
         <ResourceDictionary>
-            <Style TargetType="NavigationPage">
-                <Setter Property="BackgroundColor" Value="{Binding MainMenuBkgColor}" />
-            </Style>
-
             <Style x:Key="MenuVisualElementStyle" TargetType="View" ApplyToDerivedTypes="true">
                 <Setter Property="HorizontalOptions" Value="Center" />
                 <Setter Property="VerticalOptions" Value="CenterAndExpand" />
@@ -27,16 +23,15 @@
             <Style x:Key="CharacterColorL" TargetType="Label">
                 <Setter Property="TextColor" Value="{Binding CharColorAndSecondaryBkg}"/>
                 <Setter Property="FontSize" Value="Small" />
+                <Setter Property="LineBreakMode" Value="NoWrap" />
             </Style>
 
-            <Style x:Key="BotonFlecha" TargetType="ImageButton">
-                <Setter Property="WidthRequest" Value="70"/>
-                <Setter Property="HeightRequest" Value="60"/>
-            </Style>
-
-            <Style x:Key="TitleStyle" TargetType="Label" BaseResourceKey="CharacterColorL">
+            <Style x:Key="TitleStyle" TargetType="Label">
                 <Setter Property="FontAttributes" Value="Bold" />
                 <Setter Property="FontSize" Value="Large" />
+                <Setter Property="HorizontalTextAlignment" Value="Center" />
+                <Setter Property="TextColor" Value="{Binding CharColorAndSecondaryBkg}"/>
+                <Setter Property="LineBreakMode" Value="NoWrap" />
             </Style>
         </ResourceDictionary>
     </Application.Resources>

@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage NavigationPage.HasBackButton="False"
              NavigationPage.HasNavigationBar="False"
-             BackgroundColor="#2a2a2a"
              xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="AppMobile.View.JPistasPage">
+             x:Class="AppMobile.View.JPistasPage"
+             BackgroundColor="#2a2a2a">
     <ContentPage.Resources>
         <ResourceDictionary>
             <Style TargetType="Label">
@@ -15,49 +15,65 @@
             </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
-    
+
     <ContentPage.Content>
-        <StackLayout Margin="20">
+        <StackLayout
+            Margin="20">
+
             <!-- Botones para las pistas -->
-            <Button Text="Descubrir una palabra"
-                    TextColor="White"
-                    BackgroundColor="Transparent"
-                    x:Name="DescubrirPalabra"
-                    Clicked="DescubrirPalabra_Clicked"/>
+            <Button
+                x:Name="DescubrirPalabra"
+                Text="Descubrir una palabra"
+                TextColor="White"
+                BackgroundColor="Transparent"
+                Clicked="DescubrirPalabra_Clicked"
+                BorderColor="Transparent" />
+            <Button
+                x:Name="DescubrirLetra"
+                Text="Descubrir una letra"
+                TextColor="White"
+                BackgroundColor="Transparent"
+                Clicked="DescubrirLetra_Clicked"
+                BorderColor="Transparent" />
 
-            <Button Text="Descubrir una letra"
-                    TextColor="White"
-                    BackgroundColor="Transparent"
-                    x:Name="DescubrirLetra"
-                    Clicked="DescubrirLetra_Clicked"/>
-
-            <Label LineBreakMode="NoWrap"/>
-            
             <!-- Lista de palabras -->
-            <Label Text="Lista de palabras:"
-                   LineBreakMode="NoWrap"
-                   HorizontalTextAlignment="Center"/>
+            <Label
+                Text="Lista de palabras:"
+                LineBreakMode="NoWrap"
+                HorizontalTextAlignment="Center"
+                VerticalOptions="CenterAndExpand" />
+            <FlexLayout
+                x:Name="ListaPalabrasLayout"
+                Direction="Row"
+                JustifyContent="SpaceAround"
+                Wrap="Wrap" />
+            <Label
+                LineBreakMode="NoWrap"
+                VerticalOptions="CenterAndExpand" />
 
-            <FlexLayout x:Name="ListaPalabrasLayout"
-                        Direction="Column"
-                        JustifyContent="SpaceBetween"/>
-
-            <Label LineBreakMode="NoWrap" VerticalOptions="CenterAndExpand"/>
-            
-            <!-- volver -->
-            <StackLayout HorizontalOptions="Start"
-                         VerticalOptions="End">
-                <ImageButton x:Name="Volver"
-                        HorizontalOptions="Start"
-                        Clicked="Volver_Clicked"
-                        Style="{StaticResource BotonFlecha}"/>
-
-                <Label Text="Volver"
-                       HorizontalTextAlignment="Center"
-                       TextColor="White"
-                       LineBreakMode="NoWrap"
-                       Style="{StaticResource CharacterColorL}"
-                       FontSize="Micro" />
+            <!-- Boton volver -->
+            <StackLayout
+                HorizontalOptions="Start">
+                <Grid
+                    WidthRequest="70"
+                    HeightRequest="60">
+                    <Image
+                        WidthRequest="70"
+                        HeightRequest="60"
+                        Source="{Binding BotonFlecha}"
+                        InputTransparent="True" />
+                    <Button
+                        WidthRequest="70"
+                        HeightRequest="60"
+                        Style="{DynamicResource CharacterColorB}"
+                        Clicked="Volver_Clicked" />
+                </Grid>
+                <Button
+                    Text="Volver"
+                    Style="{DynamicResource CharacterColorB}"
+                    TextColor="White"
+                    Clicked="Volver_Clicked"
+                    FontSize="Micro" />
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>

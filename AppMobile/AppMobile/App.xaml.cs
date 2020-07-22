@@ -6,11 +6,11 @@ namespace AppMobile
 {
     public partial class App : Application
     {
-        readonly ViewModels.Container contenedor;
+        readonly ViewModels.Contenedor contenedor;
         public App()
         {
-            contenedor = ViewModels.Container.Instance;
-            ViewModels.ManejadorJuego.Instance.LinkToContainer();
+            contenedor = ViewModels.Contenedor.Instance;
+            ViewModels.ManejadorJuego.Instance.LinkToContenedor();
             BindingContext = contenedor;
             InitializeComponent();
             MainPage = new NavigationPage(new View.MainPage());

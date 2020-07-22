@@ -5,60 +5,24 @@ namespace AppMobile.Model
 {
     public sealed class Configuracion
     {
-        private int _estilo;
-        private string _mainMenuBkgColor;
-        private string _charColorAndSecondaryBkg;
-        private string _charColorInSecondaryBkg;
-        private string _charColorInAlerts;
-        private bool _temporizador;
-        private int _estiloPalabras;
-
-        //combinacion de colores
-        public int Estilo
-        {
-            get { return _estilo; }
-            private set { _estilo = value; }
-        }
+        //Combinacion de colores para temas
+        public int Estilo { get; private set; }
 
         //main menu background color
-        public string MainMenuBkgColor
-        {
-            get { return _mainMenuBkgColor; }
-            private set { _mainMenuBkgColor = value; }
-        }
+        public string MainMenuBkgColor { get; private set; }
 
         //color for labels enabled and background of the menu buttons in game
-        public string CharColorAndSecondaryBkg
-        {
-            get { return _charColorAndSecondaryBkg; }
-            private set { _charColorAndSecondaryBkg = value; }
-        }
+        public string CharColorAndSecondaryBkg { get; private set; }
 
         //char color in secondary background and color of the alerts
-        public string CharColorInSecondaryBkg
-        {
-            get { return _charColorInSecondaryBkg; }
-            private set { _charColorInSecondaryBkg  = value; }
-        }
+        public string CharColorInSecondaryBkg { get; private set; }
 
         //char color in alerts
-        public string CharColorInAlerts
-        {
-            get { return _charColorInAlerts; }
-            private set { _charColorInAlerts  = value; }
-        }
+        public string CharColorInAlerts { get; private set; }
 
-        public bool Temporizador
-        {
-            get { return _temporizador; }
-            private set { _temporizador = value; }
-        }
+        public bool Temporizador { get; private set; }
 
-        public int EstiloPalabras
-        {
-            get { return _estiloPalabras; }
-            private set { _estiloPalabras = value; }
-        }
+        public int EstiloPalabras { get; private set; }
 
         //INSTANCE
         private static Configuracion _instance = null;
@@ -71,7 +35,7 @@ namespace AppMobile.Model
 
                 return _instance;
             }
-        }//public static Configuracion Instance
+        }
 
         private Configuracion()
         {
@@ -80,79 +44,79 @@ namespace AppMobile.Model
             if (!cargado)
             {
                 //cargar el estilo clásico
-                _estilo = 2;
+                Estilo = 2;
                 CambiarColores();
-                _temporizador = (JugadorData.Instance.Tiempo == 0) ? false : true;
-                _estiloPalabras = 1;
+                Temporizador = JugadorData.Instance.Tiempo != 0;
+                EstiloPalabras = 1;
 
-                cargado = GuardarConfigs();
+                GuardarConfigs();
             }//if configs no cargado
-        }//private Configuracion()
+        }
 
         public void CambiarColores()
         {
-            _estilo = (_estilo == 1) ? 2 : 1;
-            switch (_estilo)
+            Estilo = (Estilo == 1) ? 2 : 1;
+            switch (Estilo)
             {
                 case 1: //clasico
-                    _mainMenuBkgColor = "#ffe7b3";
-                    _charColorAndSecondaryBkg = "#2a2a2a";
-                    _charColorInSecondaryBkg = "#fffffff";
-                    _charColorInAlerts = "#000000";
+                    MainMenuBkgColor = "#ffe7b3";
+                    CharColorAndSecondaryBkg = "#2a2a2a";
+                    CharColorInSecondaryBkg = "#fffffff";
+                    CharColorInAlerts = "#000000";
                     break;
                 case 2: //oscuro
-                    _mainMenuBkgColor = "#2a2a2a";
-                    _charColorAndSecondaryBkg = "#ffffff";
-                    _charColorInSecondaryBkg = "#2a2a2a";
-                    _charColorInAlerts = "#000000";
+                    MainMenuBkgColor = "#2a2a2a";
+                    CharColorAndSecondaryBkg = "#ffffff";
+                    CharColorInSecondaryBkg = "#2a2a2a";
+                    CharColorInAlerts = "#000000";
                     break;
             }
-        }//public void CambiarColores()
+        }
 
         public void AlternarTemporizador()
         {
-            _temporizador = !_temporizador;
+            Temporizador = !Temporizador;
         }
 
         public void CambiarEstiloPalabras()
         {
-            if (_estiloPalabras < 2)
-                ++_estiloPalabras;
+            if (EstiloPalabras < 2)
+                ++EstiloPalabras;
             else
-                _estiloPalabras = 1;
+                EstiloPalabras = 1;
         }
 
         private bool CargarConfigs()
         {
-            try //HAY QUE VERIFICAR SI LOS COLORES SON CORRECTOS ANTES DE HACER NADA
+            try //Verificando que los colores sean correctos
             {
                 string l = File.ReadAllText(Constantes._configPath);
                 string[] ll = l.Split();
-                _estilo = int.Parse(ll[0]);
-                _mainMenuBkgColor = ll[1];
-                _charColorAndSecondaryBkg = ll[2];
-                _charColorInSecondaryBkg = ll[3];
-                _charColorInAlerts = ll[4];
-                _temporizador = bool.Parse(ll[5]);
-                _estiloPalabras = int.Parse(ll[6]);
-                
+                Estilo = int.Parse(ll[0]);
+                MainMenuBkgColor = ll[1];
+                CharColorAndSecondaryBkg = ll[2];
+                CharColorInSecondaryBkg = ll[3];
+                CharColorInAlerts = ll[4];
+                Temporizador = bool.Parse(ll[5]);
+                EstiloPalabras = int.Parse(ll[6]);
+
             }
             catch (Exception)
             {
                 return false;
             }
             return true;
-        }//private bool cargarConfigs()
+        }
 
         public bool GuardarConfigs()
         {
-            //escribe los colores en un archivo de texto nuevo que va a generar
+            //escribe los colores en un nuevo archivo de texto
             try
             {
                 File.WriteAllText(
                 Constantes._configPath,
-                $"{_estilo} {_mainMenuBkgColor} {_charColorAndSecondaryBkg}" +
-                $" {_charColorInSecondaryBkg} {_charColorInAlerts} {_temporizador.ToString()} {_estiloPalabras}"
+                $"{Estilo} {MainMenuBkgColor} {CharColorAndSecondaryBkg}" +
+                $" {CharColorInSecondaryBkg} {CharColorInAlerts} {Temporizador} {EstiloPalabras}"
                 );
             }
             catch (Exception)
@@ -160,6 +124,7 @@ namespace AppMobile.Model
                 return false;
             }
             return true;
-        }//private bool GuardarConfigs()
-    }//class Configuracion
-}//namespace MobileApp
+        }
+
+    }
+}

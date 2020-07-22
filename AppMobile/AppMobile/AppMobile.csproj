@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -11,44 +11,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="CommonResources\categoria1.dat" />
+    <None Remove="CommonResources\categoria2.dat" />
     <None Remove="configs.dat" />
-    <None Remove="Resources\boton_ayuda.png" />
-    <None Remove="Resources\boton_configs.png" />
-    <None Remove="Resources\boton_flecha.png" />
-    <None Remove="Resources\boton_volver.png" />
-    <None Remove="Resources\categoria1.dat" />
-    <None Remove="Resources\comprobar.png" />
-    <None Remove="Resources\comprobar1.png" />
-    <None Remove="Resources\comprobar2.png" />
-    <None Remove="Resources\cuadro_puntaje.png" />
-    <None Remove="Resources\cuadro_tiempo.png" />
-    <None Remove="Resources\limpiar.png" />
-    <None Remove="Resources\limpiar1.png" />
-    <None Remove="Resources\limpiar2.png" />
     <None Remove="save.dat" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Resources\boton_ayuda.png" />
-    <EmbeddedResource Include="Resources\boton_configs.png" />
-    <EmbeddedResource Include="Resources\boton_flecha.png" />
-    <EmbeddedResource Include="Resources\categoria1.dat" />
-    <EmbeddedResource Include="Resources\comprobar1.png" />
-    <EmbeddedResource Include="Resources\comprobar2.png" />
-    <EmbeddedResource Include="Resources\cuadro_puntaje.png" />
-    <EmbeddedResource Include="Resources\cuadro_tiempo.png" />
-    <EmbeddedResource Include="Resources\limpiar1.png" />
-    <EmbeddedResource Include="Resources\limpiar2.png" />
+    <EmbeddedResource Include="CommonResources\categoria1.dat" />
+    <EmbeddedResource Include="CommonResources\categoria2.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="4.4.0.991640" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="Mono.Android">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\ReferenceAssemblies\Microsoft\Framework\MonoAndroid\v9.0\Mono.Android.dll</HintPath>
-    </Reference>
+    <PackageReference Include="Xamarin.Forms" Version="4.7.0.1142" />
   </ItemGroup>
 
   <ItemGroup>

@@ -5,15 +5,10 @@ namespace AppMobile.Model
 {
     public sealed class JugadorData
     {
-        private string _nombre;
         private int _nivel;
         private int _tiempo;
 
-        public string Nombre
-        {
-            get { return _nombre; }
-            set { _nombre = value; }
-        }
+        public string Nombre { get; set; }
 
         public int Nivel
         {
@@ -37,23 +32,22 @@ namespace AppMobile.Model
 
                 return _instance;
             }
-        }//public static Jugador Instance
+        }
 
         private JugadorData()
         {
-            //cargar save.dat
+            //cargar save.dat y revisar si esta corrupto o no
             bool cargado = CargarGuardado();
             if (!cargado)
             {
                 if (File.Exists(Constantes._savePath))
                     EliminarProgreso();
 
-                //debe mostrar alerta porque el archivo estaba danyado y valio madres
                 _nivel = 1;
-                _nombre = string.Empty;
+                Nombre = string.Empty;
                 _tiempo = 0;
             }//if save no cargado
-        }//private Jugador()
+        }
 
         private bool CargarGuardado()
         {
@@ -66,7 +60,7 @@ namespace AppMobile.Model
                 string l = lines[0];
                 if (l.Length < 3 || l.Length > 10) //nombre no cumple con los requisitos
                     return false;
-                _nombre = l;
+                Nombre = l;
 
                 //cargando nivel
                 l = lines[1];
@@ -90,37 +84,38 @@ namespace AppMobile.Model
                 return false;
             }
             return true;
-        }//private bool CargarGuardado()
+        }
 
         public bool GuardarProgreso()
         {
             try
             {
                 File.WriteAllText(Constantes._savePath,
-                                  _nombre + " " + _nivel + " " + _tiempo);
+                                  Nombre + " " + _nivel + " " + _tiempo);
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return false;
             }
             return true;
-        }//private bool GuardarProgreso()
+        }
 
         public bool EliminarProgreso()
         {
             try
             {
-                _nombre = string.Empty;
+                Nombre = string.Empty;
                 _nivel = 1;
                 _tiempo = 0;
                 File.Delete(Constantes._savePath);
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return false;
             }
 
             return true;
         }//public bool EliminarProgreso()
-    }//class Jugador
-}//namespace AppMobile
+
+    }
+}

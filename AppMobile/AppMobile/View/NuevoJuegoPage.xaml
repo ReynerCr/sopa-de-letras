@@ -6,100 +6,118 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="AppMobile.View.NuevoJuegoPage">
-    
+             x:Class="AppMobile.View.NuevoJuegoPage"
+             BackgroundColor="{Binding MainMenuBkgColor}">
     <ContentPage.Content>
-        <Grid Margin="26">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="2*" />
-                <RowDefinition Height=".5*" />
-                <RowDefinition Height="1*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+        <Grid>
+            <Grid
+            Margin="26">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*" />
+                    <RowDefinition Height=".5*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="50" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
 
-            <ActivityIndicator IsRunning="{Binding IsBusy}"
-                               Grid.Row="0"
-                               Grid.Column="0"
-                               Grid.RowSpan="5"
-                               Grid.ColumnSpan="2"
-                               VerticalOptions="Center"
-                               HorizontalOptions="Center"
-                               Color="Orange"/>
-
-            <Label Text="Nuevo juego"
-                   Style="{StaticResource TitleStyle}"
-                   Grid.Row="0"
-                   Grid.Column="0"
-                   Grid.ColumnSpan="2"
-                   LineBreakMode="NoWrap"
-                   HorizontalTextAlignment="Center" />
-
-            <Label Text="Ingrese su nombre en el recuadro"
-                   Style="{StaticResource CharacterColorL}"
-                   Grid.Row="1"
-                   Grid.Column="0"
-                   Grid.ColumnSpan="2"
-                   LineBreakMode="NoWrap"
-                   HorizontalTextAlignment="Center" />
-              
-            <Entry Placeholder="  Ingrese nombre aqui...  "
-                   x:Name="TextEditor"
-                   Text=""
-                   MaxLength="10"
-                   HorizontalOptions="Center"
-                   TextColor="Black"
-                   BackgroundColor="White"
-                   Grid.Row="3"
-                   Grid.Column="0"
-                   Grid.ColumnSpan="2" />
-
-            <Label Text="Mínimo 3 caracteres, máximo 10"
-                   Style="{StaticResource CharacterColorL}"
-                   Grid.Row="4"
-                   Grid.Column="0"
-                   Grid.ColumnSpan="2"
-                   LineBreakMode="NoWrap"
-                   FontSize="Micro"
-                   HorizontalTextAlignment="Center" />
-
-            
-            <ImageButton x:Name="Volver"
-                         Grid.Row="5"
-                         Grid.Column="0"
-                         HorizontalOptions="Center"
-                         Clicked="Volver_Clicked"
-                         Style="{StaticResource BotonFlecha}"/>
-
-            <Label x:Name="LabelVolver"
-                   Text="Volver"
-                   Grid.Row="6"
-                   Grid.Column="0"
-                   HorizontalTextAlignment="Center"
-                   Style="{StaticResource CharacterColorL}"
-                   LineBreakMode="NoWrap"
-                   FontSize="Micro" />
-
-            <ImageButton x:Name="Continuar"
-                         Grid.Row="5"
-                         Grid.Column="1"
-                         HorizontalOptions="Center"
-                         Clicked="Continuar_Clicked"
-                         Style="{StaticResource BotonFlecha}"
-                         RotationY="180" />
-
-            <Label  Text="Continuar"
-                    Grid.Row="6"
-                    Grid.Column="1"
-                    HorizontalTextAlignment="Center"
+                <!--Formulario-->
+                <Label
+                    Text="Nuevo juego"
+                    Style="{StaticResource TitleStyle}"
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2" />
+                <Label
+                    Text="Ingrese su nombre en el recuadro"
                     Style="{StaticResource CharacterColorL}"
-                    LineBreakMode="NoWrap"
-                    FontSize="Micro" />
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    HorizontalTextAlignment="Center" />
+                <Entry
+                    Placeholder="  Ingrese nombre aqui...  "
+                    x:Name="TextEditor"
+                    Text=""
+                    MaxLength="10"
+                    HorizontalOptions="Center"
+                    TextColor="Black"
+                    BackgroundColor="White"
+                    Grid.Row="3"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2" />
+                <Label 
+                    Text="Mínimo 3 caracteres, máximo 10"
+                    Style="{StaticResource CharacterColorL}"
+                    Grid.Row="4"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    FontSize="Micro"
+                    HorizontalTextAlignment="Center" />
+
+                <!-- Boton volver -->
+                <StackLayout
+                    HorizontalOptions="Start"
+                    Grid.Row="5"
+                    Grid.Column="0">
+                    <Grid
+                        WidthRequest="70"
+                        HeightRequest="60">
+                        <Image
+                            WidthRequest="70"
+                            HeightRequest="60"
+                            Source="{Binding BotonFlecha}"
+                            InputTransparent="True" />
+                        <Button
+                            WidthRequest="70"
+                            HeightRequest="60"
+                            Style="{DynamicResource CharacterColorB}"
+                            Clicked="Volver_Clicked" />
+                    </Grid>
+                    <Button
+                        Text="Volver"
+                        Style="{DynamicResource CharacterColorB}"
+                        Clicked="Volver_Clicked"
+                        FontSize="Micro" />
+                </StackLayout>
+
+                <!-- Boton continuar -->
+                <StackLayout
+                    HorizontalOptions="End"
+                    Grid.Row="5"
+                    Grid.Column="1">
+                    <Grid
+                        WidthRequest="70"
+                        HeightRequest="60">
+                        <Image
+                            x:Name="Continuar"
+                            WidthRequest="70"
+                            HeightRequest="60"
+                            InputTransparent="True" />
+                        <Button
+                            WidthRequest="70"
+                            HeightRequest="60"
+                            Style="{DynamicResource CharacterColorB}"
+                            Clicked="Continuar_Clicked" />
+                    </Grid>
+                    <Button
+                        Text="Continuar"
+                        Style="{DynamicResource CharacterColorB}"
+                        Clicked="Continuar_Clicked"
+                        FontSize="Micro" />
+                </StackLayout>
+            </Grid>
+            <!-- Indicador de actividad -->
+            <ActivityIndicator
+                IsRunning="{Binding IsBusy}"
+                IsVisible="{Binding IsBusy}"
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                Color="Orange" />
         </Grid>
     </ContentPage.Content>
 </ContentPage>

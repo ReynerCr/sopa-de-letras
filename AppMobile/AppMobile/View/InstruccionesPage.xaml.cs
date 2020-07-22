@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AppMobile.ViewModels;
+using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -14,13 +15,19 @@ namespace AppMobile.View
 
         protected override void OnAppearing()
         {
-            Volver.Source = ImageSource.FromResource("AppMobile.Resources.boton_flecha.png");
             base.OnAppearing();
         }
 
         private async void Volver_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PopAsync();
+            Contenedor contenedor = Contenedor.Instance;
+            if (!contenedor.IsBusy)
+            {
+                contenedor.IsBusy = true;
+                await Navigation.PopAsync();
+                contenedor.IsBusy = false;
+            }
         }
-    }//partial class InstruccionesPage
+
+    }
 }

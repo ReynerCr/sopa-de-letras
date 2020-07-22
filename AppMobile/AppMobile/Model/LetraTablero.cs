@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace AppMobile.Model
+﻿namespace AppMobile.Model
 {
     class LetraTablero : ToggleButton
     {

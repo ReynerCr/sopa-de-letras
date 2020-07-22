@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AppMobile.ViewModels;
+using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -7,28 +8,42 @@ namespace AppMobile.View
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class NuevoJuegoPage : ContentPage
     {
-        bool BusyN; //solo para esta pagina
+        readonly Contenedor contenedor;
+        bool BusyN; //para revisar que no este ocupado el boton de continuar
         public NuevoJuegoPage()
         {
+            contenedor = Contenedor.Instance; ;
             InitializeComponent();
             BusyN = false;
         }
 
         protected override void OnAppearing()
         {
-            Volver.Source = ImageSource.FromResource("AppMobile.Resources.boton_flecha.png");
-            Continuar.Source = ImageSource.FromResource("AppMobile.Resources.boton_flecha.png");
+            if (Device.RuntimePlatform == Device.GTK)
+            {
+                Continuar.Source = "Images/boton_flechaI.png";
+            }
+            else
+            {
+                Continuar.Source = "boton_flecha.png";
+                Continuar.RotateTo(180);
+            }
             base.OnAppearing();
         }
 
         private async void Volver_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PopAsync();
+            if (!contenedor.IsBusy)
+            {
+                contenedor.IsBusy = true;
+                await Navigation.PopAsync();
+                contenedor.IsBusy = false;
+            }
         }
 
         private async void Continuar_Clicked(object sender, EventArgs e)
         {
-            if (!BusyN)
+            if (!BusyN && !contenedor.IsBusy)
             {
                 BusyN = true;
                 if (string.IsNullOrWhiteSpace(TextEditor.Text))
@@ -39,12 +54,17 @@ namespace AppMobile.View
                 string name = TextEditor.Text.Trim();
                 if (name.Length >= 3 && name.Length <= 10)
                 {
-                    ViewModels.Container contenedor = ViewModels.Container.Instance;
                     contenedor.IsBusy = true;
                     contenedor.Nombre = TextEditor.Text;
-                    contenedor.Nivel = 1;
-                    Navigation.InsertPageBefore(new JuegoPage(), this);
-                    await Navigation.PopAsync();
+                    if (Device.RuntimePlatform == Device.GTK)
+                    {
+                        await Navigation.PushAsync(new JuegoPage());
+                    }
+                    else
+                    {
+                        Navigation.InsertPageBefore(new JuegoPage(), this);
+                        await Navigation.PopAsync();
+                    }
                     contenedor.IsBusy = false;
                 }
                 else
@@ -53,6 +73,7 @@ namespace AppMobile.View
                 }
                 BusyN = false;
             }//!BusyN
-        }//private async void Continuar_Clicked(object sender, EventArgs e)
-    }//partial class NuevoJuegoPage
+        }
+
+    }
 }

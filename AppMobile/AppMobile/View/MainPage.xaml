@@ -6,27 +6,37 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="AppMobile.View.MainPage">
-    <StackLayout>
-        <ActivityIndicator IsRunning="{Binding IsBusy}"
-                           VerticalOptions="Center"
-                           HorizontalOptions="Center"
-                           Color="Orange"/>
-        
-        <Button x:Name="Nuevo_juego" Text="Nuevo juego" VerticalOptions="CenterAndExpand"
-                HorizontalOptions="Center" Clicked="NuevoJuego_Clicked" Style="{DynamicResource CharacterColorB}" />
-
-        <Button x:Name="Continuar" Text="Continuar" VerticalOptions="CenterAndExpand"
-                HorizontalOptions="Center" Clicked="Continuar_Clicked" Style="{DynamicResource CharacterColorB}" />
-
-        <Button x:Name="Instrucciones" Text="Instrucciones" VerticalOptions="CenterAndExpand"
-                HorizontalOptions="Center" Clicked="Instrucciones_Clicked" Style="{DynamicResource CharacterColorB}" />
-
-        <Button x:Name="Opciones" Text="Opciones" VerticalOptions="CenterAndExpand"
-                HorizontalOptions="Center" Clicked="Opciones_Clicked" Style="{DynamicResource CharacterColorB}" />
-
-        <Button x:Name="Creditos" Text="Créditos" VerticalOptions="CenterAndExpand"
-                HorizontalOptions="Center" Clicked="Creditos_Clicked" Style="{DynamicResource CharacterColorB}" />
-    </StackLayout>
-    
+             x:Class="AppMobile.View.MainPage"
+             BackgroundColor="{Binding MainMenuBkgColor}">
+    <Grid>
+        <StackLayout>
+            <Button
+                Text="Nuevo juego"
+                Clicked="NuevoJuego_Clicked"
+                Style="{DynamicResource CharacterColorB}" />
+            <Button
+                x:Name="Continuar"
+                Text="Continuar"
+                Clicked="Continuar_Clicked"
+                Style="{DynamicResource CharacterColorB}" />
+            <Button
+                Text="Instrucciones"
+                Clicked="Instrucciones_Clicked"
+                Style="{DynamicResource CharacterColorB}" />
+            <Button
+                Text="Opciones"
+                Clicked="Opciones_Clicked"
+                Style="{DynamicResource CharacterColorB}" />
+            <Button
+                Text="Créditos"
+                Clicked="Creditos_Clicked"
+                Style="{DynamicResource CharacterColorB}" />
+        </StackLayout>
+        <ActivityIndicator
+            IsRunning="{Binding IsBusy}"
+            IsVisible="{Binding IsBusy}"
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            Color="Orange" />
+    </Grid>
 </ContentPage>

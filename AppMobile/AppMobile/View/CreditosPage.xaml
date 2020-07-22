@@ -6,65 +6,70 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="AppMobile.View.CreditosPage">
+             x:Class="AppMobile.View.CreditosPage"
+             BackgroundColor="{Binding MainMenuBkgColor}">
     <ContentPage.Content>
-        <StackLayout Margin="20">
-            
-            <Label Text="Créditos"
-                   VerticalOptions="StartAndExpand"
-                   HorizontalTextAlignment="Center"
-                   LineBreakMode="NoWrap"
-                   Style="{StaticResource TitleStyle}" />
-
-            <FlexLayout Direction="Column"
-                        AlignItems="Center"
-                        JustifyContent="SpaceEvenly"
-                        VerticalOptions="Center">
-                
-                <Label Text="Contreras Reyner;"
-                       LineBreakMode="NoWrap"
-                       Style="{StaticResource CharacterColorL}" />
-                
-                <Label Text="C.I: V.-26934400"
-                       LineBreakMode="NoWrap"
-                       Style="{StaticResource CharacterColorL}" />
-
-                <Label LineBreakMode="NoWrap"/>
-                
-                <Label Text="Llanes John;"
-                       LineBreakMode="NoWrap"
-                       Style="{StaticResource CharacterColorL}" />
-
-                <Label Text="C.I: V.-30853320"
-                       LineBreakMode="NoWrap"
-                       Style="{StaticResource CharacterColorL}" />
-
-                <Label LineBreakMode="NoWrap"/>
-
-                <Label Text="Programación II Sección 2."
-                       Style="{StaticResource CharacterColorL}" />
+        <StackLayout
+            Margin="10">
+            <Label
+                Margin="10"
+                Text="Créditos"
+                Style="{StaticResource TitleStyle}" />
+            <FlexLayout
+                Margin="10"
+                Direction="Column"
+                AlignItems="Center"
+                JustifyContent="SpaceEvenly"
+                VerticalOptions="CenterAndExpand">
+                <Label
+                    Text="Contreras Reyner;"
+                    Style="{StaticResource CharacterColorL}" />
+                <Label
+                    Text="C.I: V.-26934400"
+                    Style="{StaticResource CharacterColorL}" />
+                <Label
+                    LineBreakMode="NoWrap"/>
+                <Label
+                    Text="Llanes John;"
+                    Style="{StaticResource CharacterColorL}" />
+                <Label
+                    Text="C.I: V.-30853320"
+                    Style="{StaticResource CharacterColorL}" />
+                <Label
+                    LineBreakMode="NoWrap"/>
+                <Label
+                    Text="Programación II Sección 2."
+                    Style="{StaticResource CharacterColorL}"
+                    LineBreakMode="WordWrap" />
             </FlexLayout>
 
-            <Label LineBreakMode="NoWrap" VerticalOptions="CenterAndExpand"/>
-
-            <StackLayout HorizontalOptions="Start">
-                <ImageButton x:Name="Volver"
-                        HorizontalOptions="Start"
-                        Clicked="Volver_Clicked"
-                        Style="{StaticResource BotonFlecha}"/>
-
-                <Label x:Name="LabelVolver"
-                       Text="Volver"
-                       HorizontalTextAlignment="Center"
-                       LineBreakMode="NoWrap"
-                       Style="{StaticResource CharacterColorL}"
-                       FontSize="Micro" />
+            <!-- Boton volver -->
+            <StackLayout
+                Margin="10"
+                HorizontalOptions="Start">
+                <Grid
+                    WidthRequest="70"
+                    HeightRequest="60">
+                    <Image
+                        WidthRequest="70"
+                        HeightRequest="60"
+                        Source="{Binding BotonFlecha}"
+                        InputTransparent="True" />
+                    <Button
+                        WidthRequest="70"
+                        HeightRequest="60"
+                        Style="{DynamicResource CharacterColorB}"
+                        Clicked="Volver_Clicked" />
+                </Grid>
+                <Button
+                    Text="Volver"
+                    Style="{DynamicResource CharacterColorB}"
+                    Clicked="Volver_Clicked"
+                    FontSize="Micro" />
             </StackLayout>
-
-            <Label Text="Versión 0.9"
-                   LineBreakMode="NoWrap"
+            <Label Text="Versión 0.95"
                    HorizontalTextAlignment="Center"
                    Style="{StaticResource CharacterColorL}" />
-        </StackLayout>  
+        </StackLayout>
     </ContentPage.Content>
 </ContentPage>

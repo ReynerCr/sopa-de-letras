@@ -1,7 +1,9 @@
-#if DEBUG
-[assembly: Application(Debuggable=true)]
+/*#if DEBUG
+using Android.App;
+
+[assembly: Application(Debuggable = true)]
 #else
 using Android.App;
 
 [assembly: Application(Debuggable = false)]
-#endif
+#endif*/

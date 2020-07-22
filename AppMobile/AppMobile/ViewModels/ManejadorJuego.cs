@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using AppMobile.Model;
+﻿using AppMobile.Model;
 using AppMobile.View;
+using System;
+using System.Collections.Generic;
 using Xamarin.Forms;
 
 namespace AppMobile.ViewModels
@@ -12,14 +12,11 @@ namespace AppMobile.ViewModels
         private int _puntuacion;
         private int _totalPalabras;
         private int direccion;
-        private List<LetraTablero> Activos;
+        private readonly List<LetraTablero> Activos;
         private Grid TableroLayout;
-        private List<Label> LabelPalabras;
+        private readonly List<Label> LabelPalabras;
         private LetraTablero[][] tableroButtons;
-        private JPistasPage _pistasPage;
-        private JConfigsPage _configsPage;
-
-        private Container contenedor;
+        private Contenedor contenedor;
 
         //INSTANCIA PARA SINGLETON-----------------------------------------------
         private static ManejadorJuego _instance;
@@ -32,13 +29,13 @@ namespace AppMobile.ViewModels
 
                 return _instance;
             }
-        }//public static ManejadorJuego Instance
+        }
 
-        public void LinkToContainer()
+        public void LinkToContenedor()
         {
             if (contenedor == null)
-                contenedor = Container.Instance;
-        }//public void LinkToContainer()
+                contenedor = Contenedor.Instance;
+        }
 
         private ManejadorJuego()
         {
@@ -48,17 +45,9 @@ namespace AppMobile.ViewModels
         }
 
         //PROPIEDADES GETTERS Y SETTERS----------------------------------------
-        public JPistasPage PistasPage
-        {
-            get { return _pistasPage; }
-            set { _pistasPage = value; }
-        }
+        public JPistasPage PistasPage { get; set; }
 
-        public JConfigsPage ConfigsPage
-        {
-            get { return _configsPage; }
-            set { _configsPage = value; }
-        }
+        public JConfigsPage ConfigsPage { get; set; }
 
         public int Puntuacion
         {
@@ -68,7 +57,7 @@ namespace AppMobile.ViewModels
                 if (_puntuacion != value)
                     _puntuacion = value;
             }
-        }//public int Puntuacion
+        }
 
         public int TotalPalabras
         {
@@ -78,7 +67,7 @@ namespace AppMobile.ViewModels
                 if (_totalPalabras != value)
                     _totalPalabras = value;
             }
-        }//public int TotalPalabras
+        }
 
         public string CategoriaPalabras { get { return _tablero.GetCategoriaPalabras(); } }
         public Tablero GetTablero() { return _tablero; }
@@ -95,7 +84,7 @@ namespace AppMobile.ViewModels
             if (_puntuacion == _totalPalabras)
                 return true;
             return false;
-        }//public bool AumentarPuntuacion()
+        }
 
         /* Metodo que reinicia el tablero. */
         public void Reiniciar(Grid tabLayout = null)
@@ -107,7 +96,7 @@ namespace AppMobile.ViewModels
                 if (contenedor.Temporizador)
                     contenedor.ReiniciarTemporizador();
             }
-        }//public void Reiniciar(Grid tabLayout = null)
+        }
 
         /* Metodo utilizado para volver al menu. */
         public void Limpiar()
@@ -115,12 +104,12 @@ namespace AppMobile.ViewModels
             _tablero = null;
             LabelPalabras.Clear();
             Activos.Clear();
-        }//public void Limpiar()
+        }
 
         /* Metodo que marca una palabra buscada en el tablero. */
         public void DescubrirPalabra()
         {
-            if (_pistasPage.DPalabra)
+            if (PistasPage.DPalabra)
             {
                 //aqui metodo para descubrir una palabra
                 Palabra p = _tablero.GetPalabraActiva();
@@ -171,13 +160,13 @@ namespace AppMobile.ViewModels
                     }//switch(tipo)
                 }//if (p != null)
             }//if
-        }//public void DescubrirPalabra()
+        }
 
         /* Metodo que marca la primera letra de una palabra buscada
            en el tablero. */
         public void DescubrirLetra()
         {
-            if (_pistasPage.DLetra)
+            if (PistasPage.DLetra)
             {
                 Palabra p = _tablero.GetPalabraActiva();
                 if (p != null)
@@ -187,7 +176,7 @@ namespace AppMobile.ViewModels
                     Marcar(tableroButtons[p.I][p.J]);
                 }
             }//if
-        }//public void DescubrirLetra()
+        }
 
         /* Metodo que comprueba si los botones pulsados corresponden a una palabra
            valida que se encuentre en la lista de palabras buscadas, ademas aumenta
@@ -198,7 +187,10 @@ namespace AppMobile.ViewModels
                 return false;
 
             string txt = "";
-            for (int i = 0; i < Activos.Count; i++) { txt += Activos[i].Text; }
+            for (int i = 0; i < Activos.Count; i++)
+            {
+                txt += Activos[i].Text;
+            }
 
             bool encontrado = false;
             for (int i = 0; i < LabelPalabras.Count; i++)
@@ -222,7 +214,7 @@ namespace AppMobile.ViewModels
                 LimpiarActivos(false);
 
             return encontrado;
-        }//public bool ComprobarActivos()
+        }
 
         /* Metodo para limpiar la lista de palabras activadas. */
         public void LimpiarActivos(bool marcar)
@@ -230,47 +222,50 @@ namespace AppMobile.ViewModels
             if (Activos.Count == 0)
                 return;
 
+            LetraTablero actual = null;
             for (int i = 0; i < Activos.Count; i++) //mas rapido que foreach
             {
-                Activos[i].Scale = 1;
-                Activos[i].BorderWidth = 1;
+                actual = Activos[i];
+                actual.Scale = 1;
+                actual.BorderWidth = 1;
+                actual.BackgroundColor = Color.FromHex("#ffffff");
                 if (marcar)
                 {
-                    Activos[i].BorderColor = Color.Red;
-                    Activos[i].TextColor = Color.Red;
+                    actual.BorderColor = Color.Red;
+                    actual.TextColor = Color.Red;
                 }
-                    
-                Activos[i].AltToggle();
-            }
-            Activos.Clear();
-        }//public void LimpiarActivos(bool marcar)
 
+                actual.AltToggle();
+            }
+            actual.FontAttributes = FontAttributes.None;
+            Activos.Clear();
+        }
 
         //METODOS PRIVADOS-----------------------------------
         /* Metodo que inicializa todo el juego: tablero, tiempo, lista de palabras,
            puntuaciones. */
         private void Inicializar(Grid tabLayout = null)
         {
-            int i, n, lista;
-            n = contenedor.Nivel;
-            lista = contenedor.EstiloPalabras;
-            _totalPalabras = 4 + (n * 2);
-
+            int i, nivel, numLista;
+            nivel = contenedor.Nivel;
+            numLista = contenedor.EstiloPalabras;
+            _totalPalabras = 4 + (nivel * 2);
             //generar _tablero
             if (_tablero == null)
-                _tablero = new Tablero(n, lista);
+                _tablero = new Tablero(nivel, numLista);
             else
-                _tablero.Inicializar(n, lista);
+                _tablero.Inicializar(nivel, numLista);
 
             //cargar lista de palabras en etiquetas
             if (LabelPalabras.Count != 0)
             {
-                _pistasPage.LimpiarLabels();
+                PistasPage.LimpiarLabels();
                 LabelPalabras.Clear();
             }
             for (i = 0; i < TotalPalabras; i++)
                 LabelPalabras.Add(new Label { Text = GetPalabra(i) });
 
+            Activos.Clear();
             LabelPalabras.TrimExcess();
 
             //vaciar grid de tablero
@@ -283,10 +278,10 @@ namespace AppMobile.ViewModels
             if (tabLayout != null) //en teoria es para la primera vez
                 TableroLayout = tabLayout;
 
-			//inicializar colunas y filas del grid
+            //inicializar colunas y filas del grid
             i = 0;
-            n = n + 6; //reutilizo n
-            while (i < n)
+            nivel += 6; //reutilizo n
+            while (i < nivel)
             {
                 TableroLayout.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
                 TableroLayout.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
@@ -294,23 +289,23 @@ namespace AppMobile.ViewModels
             }
 
             //cargar labels e insertarlas en el grid
-            tableroButtons = new LetraTablero[n][];
+            tableroButtons = new LetraTablero[nivel][];
             char[][] tab = GetTablero().GetMatriz();
-            for (i = 0; i < n; i++)
+            for (i = 0; i < nivel; i++)
             {
-                tableroButtons[i] = new LetraTablero[n];
-                for (int j = 0; j < n; j++)
+                tableroButtons[i] = new LetraTablero[nivel];
+                for (int j = 0; j < nivel; j++)
                 {
                     tableroButtons[i][j] = new LetraTablero(i, j, tab[i][j]);
                     tableroButtons[i][j].Clicked += OnTableroButtonClicked;
                     TableroLayout.Children.Add(tableroButtons[i][j], i, j);
                 }//for j
             }//for i
-            
+
             //actualizar la puntuacion cuando se pasa de nivel o se reinicia tablero
             _puntuacion = -1;
             contenedor.AumentarPuntuacion();
-        }//public void Inicializar(int n, int lista, Grid tabLayout)
+        }
 
         /*  Revisa donde esta el actual desde el anterior
             -1 = no determinado
@@ -360,11 +355,10 @@ namespace AppMobile.ViewModels
                     return 7;
                 if ((dir == 0 || dir == 8) && (j - 1) >= 0 && tableroButtons[i][j - 1] == Activos[Activos.Count - 1])
                     return 8;
-                --i;
             }//revisando hacia izquierda
 
             return 0; //no esta cerca
-        }//private int DetDireccion(LetraTablero lt)
+        }
 
         /* Valida si hay un boton activo cercano al ultimo que se pulso,
            y si va en la misma direccion */
@@ -377,9 +371,9 @@ namespace AppMobile.ViewModels
             int dir = DetDireccion(lb, direccion);
             if (dir != 0)
                 return true;
-            
+
             return false;
-        }//public bool Cercania(LetraTablero lb, bool avanza)
+        }
 
         //Marcar un boton del grid
         private void Marcar(LetraTablero lb)
@@ -389,7 +383,15 @@ namespace AppMobile.ViewModels
             if (lb.IsToggled)
             {
                 lb.Scale = 1.3;
-                lb.BorderWidth = 2.5;
+                lb.BorderWidth = 1.7;
+                lb.FontAttributes = FontAttributes.Bold;
+                lb.BackgroundColor = Color.FromHex("#bfbfbf");
+                if (Activos.Count > 0)
+                {
+                    LetraTablero anterior = Activos[Activos.Count - 1];
+                    anterior.BackgroundColor = Color.FromHex("#e6e6e6");
+                    anterior.FontAttributes = FontAttributes.None;
+                }
                 Activos.Add(lb);
             }
             else
@@ -397,20 +399,29 @@ namespace AppMobile.ViewModels
                 Activos.RemoveAt(Activos.Count - 1);
                 lb.Scale = 1;
                 lb.BorderWidth = 1;
+                lb.BackgroundColor = Color.FromHex("#ffffff");
+                lb.FontAttributes = FontAttributes.None;
+                if (Activos.Count > 0)
+                {
+                    LetraTablero anterior = Activos[Activos.Count - 1];
+                    anterior.BackgroundColor = Color.FromHex("#bfbfbf");
+                    anterior.FontAttributes = FontAttributes.Bold;
+                }
             }
-        }//private void Marcar(LetraTablero lb)
+        }
 
         //Eventos de los botones en el grid
         private void OnTableroButtonClicked(object sender, EventArgs args)
         {
             LetraTablero b = (LetraTablero)sender;
-           if (Activos.Count == 1)
+            if (Activos.Count == 1)
                 direccion = DetDireccion(b);
 
             if (Cercania(b, !b.IsToggled))
             {
                 Marcar(b);
             }//if Cercania
-        }//private void OnTableroButtonClicked(object sender, EventArgs args)
-    }//class ManejadorJuego
+        }
+
+    }
 }

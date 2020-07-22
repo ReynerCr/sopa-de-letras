@@ -6,46 +6,53 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="AppMobile.View.OpcionesPage">
-     
+             x:Class="AppMobile.View.OpcionesPage"
+             BackgroundColor="{Binding MainMenuBkgColor} ">
+
     <ContentPage.Content>
-        <StackLayout Margin="20">
-            <Label Text="Opciones"
-                   VerticalOptions="StartAndExpand"
-                   HorizontalTextAlignment="Center"
-                   LineBreakMode="NoWrap"
-                   Style="{DynamicResource TitleStyle}" />
+        <StackLayout
+            Margin="20">
+            <Label
+                Text="Opciones"
+                Style="{DynamicResource TitleStyle}" />
+            <Button
+                x:Name="Temporizador"
+                Text="{Binding DisplayTemporizador}"
+                Clicked="Temporizador_Clicked"
+                Style="{DynamicResource CharacterColorB}" />
+            <Button
+                Text="{Binding DisplayEstilo}" 
+                Clicked="Estilo_Clicked"
+                Style="{DynamicResource CharacterColorB}" />
+            <Button
+                x:Name="EstiloPalabras"
+                Text="{Binding DisplayEstiloPalabras}" 
+                Clicked="EstiloPalabras_Clicked"
+                Style="{DynamicResource CharacterColorB}" />
 
-                <Button x:Name="Temporizador"
-                    Text="{Binding DisplayTemporizador}"
-                    HorizontalOptions="Center"
-                    Clicked="Temporizador_Clicked"
-                    Style="{DynamicResource CharacterColorB}" />
-
-                <Button x:Name="Estilo" Text="{Binding DisplayEstilo}" 
-                    HorizontalOptions="Center"
-                    Clicked="Estilo_Clicked"
-                    Style="{DynamicResource CharacterColorB}" />
-
-            <Button x:Name="EstiloPalabras"
-                    Text="{Binding DisplayEstiloPalabras}" 
-                    HorizontalOptions="Center"
-                    Clicked="EstiloPalabras_Clicked"
-                    Style="{DynamicResource CharacterColorB}" />
-
-            <StackLayout HorizontalOptions="Start">
-                    <ImageButton x:Name="Volver"
-                                 HorizontalOptions="Start"
-                                 Clicked="Volver_Clicked"
-                                 Style="{StaticResource BotonFlecha}"/>
-
-                    <Label x:Name="LabelVolver"
-                           Text="Volver"
-                           HorizontalOptions="Center"
-                           LineBreakMode="NoWrap"
-                           Style="{DynamicResource CharacterColorL}"
-                           FontSize="Micro" />
-                </StackLayout>
+            <!-- Boton volver -->
+            <StackLayout
+                HorizontalOptions="Start">
+                <Grid
+                    WidthRequest="70"
+                    HeightRequest="60">
+                    <Image
+                        WidthRequest="70"
+                        HeightRequest="60"
+                        Source="{Binding BotonFlecha}"
+                        InputTransparent="True" />
+                    <Button
+                        WidthRequest="70"
+                        HeightRequest="60"
+                        Style="{DynamicResource CharacterColorB}"
+                        Clicked="Volver_Clicked" />
+                </Grid>
+                <Button
+                    Text="Volver"
+                    Style="{DynamicResource CharacterColorB}"
+                    Clicked="Volver_Clicked"
+                    FontSize="Micro" />
+            </StackLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

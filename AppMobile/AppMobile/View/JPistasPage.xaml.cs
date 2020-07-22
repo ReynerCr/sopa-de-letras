@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AppMobile.ViewModels;
+using System;
 using System.Collections.Generic;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -8,6 +9,7 @@ namespace AppMobile.View
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class JPistasPage : ContentPage
     {
+        readonly Contenedor contenedor;
         private List<Label> labelPalabras;
         private bool _DPalabra;
         private bool _DLetra;
@@ -27,7 +29,7 @@ namespace AppMobile.View
                         DescubrirPalabra.TextColor = Color.Black;
                 }//if DPalabra != value
             }//private set
-        }//bool DPalabra
+        }
 
         public bool DLetra
         {
@@ -44,18 +46,18 @@ namespace AppMobile.View
                         DescubrirLetra.TextColor = Color.Black;
                 }//if _DLetra != value
             }//private set
-        }//bool DLetra
+        }
 
         protected override void OnAppearing()
         {
             base.OnAppearing();
         }
-        
+
         public JPistasPage()
         {
+            contenedor = Contenedor.Instance;
             _DPalabra = true;
             InitializeComponent();
-            Volver.Source = ImageSource.FromResource("AppMobile.Resources.boton_flecha.png");
         }
 
         public void LimpiarLabels()
@@ -79,7 +81,7 @@ namespace AppMobile.View
         {
             LimpiarLabels();
             if (labelPalabras == null)
-                labelPalabras = ViewModels.ManejadorJuego.Instance.GetLabels();
+                labelPalabras = ManejadorJuego.Instance.GetLabels();
             for (int i = 0; i < labelPalabras.Count; i++)
             {
                 labelPalabras[i].HorizontalTextAlignment = TextAlignment.Center;
@@ -89,27 +91,37 @@ namespace AppMobile.View
 
         private async void Volver_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PopAsync();
+            if (!contenedor.IsBusy)
+            {
+                contenedor.IsBusy = true;
+                await Navigation.PopAsync();
+                contenedor.IsBusy = false;
+            }
         }
 
         private async void DescubrirPalabra_Clicked(object sender, EventArgs e)
         {
-            if (DPalabra)
+            if (DPalabra && !contenedor.IsBusy)
             {
-                ViewModels.ManejadorJuego.Instance.DescubrirPalabra();
+                contenedor.IsBusy = true;
+                ManejadorJuego.Instance.DescubrirPalabra();
                 DPalabra = false;
                 await Navigation.PopAsync();
+                contenedor.IsBusy = false;
             }//if
-        }//private void DescubrirPalabra_Clicked(object sender, EventArgs e)
+        }
 
         private async void DescubrirLetra_Clicked(object sender, EventArgs e)
         {
-            if (DLetra)
+            if (DLetra && !contenedor.IsBusy)
             {
-                ViewModels.ManejadorJuego.Instance.DescubrirLetra();
+                contenedor.IsBusy = true;
+                ManejadorJuego.Instance.DescubrirLetra();
                 DLetra = false;
                 await Navigation.PopAsync();
+                contenedor.IsBusy = false;
             }//if
-        }//private void DescubrirLetra_Clicked(object sender, EventArgs e)
-    }//partial class JPistasPage
+        }
+
+    }
 }

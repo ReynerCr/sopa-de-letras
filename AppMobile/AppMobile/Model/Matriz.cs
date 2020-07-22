@@ -2,14 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using Xamarin.Forms;
 
 namespace AppMobile.Model
 {
     class Matriz
     {
-        private List<Palabra> _palabras;
+        private readonly List<Palabra> _palabras;
         private char[][] _matriz;
-        private string _categoriaPalabras;
+        private readonly string _categoriaPalabras;
         private readonly int nM;
         private readonly int toltL;
         private bool good;
@@ -28,7 +29,7 @@ namespace AppMobile.Model
                 values[i] = values[j];
                 values[j] = temp;
             }
-        }//public void Shuffle<T>(IList<T> values)
+        }
 
         //metodo de Ordenar de mayor a menor
         private void Ordenar(string[] values, int m)
@@ -45,7 +46,7 @@ namespace AppMobile.Model
                     }
                 }//for j
             }//for i
-        }//public void Ordenar(string[] values, int m)
+        }
 
         /*
             1 = abajo
@@ -99,7 +100,7 @@ namespace AppMobile.Model
                 return true;
 
             return false;
-        }//public bool Colocar(int x, int y, int tipo, string letra)
+        }
 
         private bool Casilla(int x, int y)
         {
@@ -107,7 +108,7 @@ namespace AppMobile.Model
                 return true;
 
             return false;
-        }//public bool Casilla(int x, int y)
+        }
 
         /*
             1 = abajo
@@ -143,7 +144,7 @@ namespace AppMobile.Model
                     if (Casilla(x + a * (i), y + b * (i)) == true)
                     {
                         if (_matriz[x + a * (i)][y + b * (i)] == ' ')
-                           ++cont;
+                            ++cont;
                         else
                             break;
                     }
@@ -154,17 +155,35 @@ namespace AppMobile.Model
                     cont = 0;
             }//for k
             return -1;
-        }//public int Posible(int letra, int x, int y)
+        }
 
         public Matriz(String ruta, int nivel)
         {
             string[] datos, letras;
 
             //lectura de archivo
-            var assembly = Assembly.GetExecutingAssembly();
-            using (Stream stream = assembly.GetManifestResourceStream("AppMobile.Resources." + ruta))
+            if (Device.RuntimePlatform != Device.GTK)
             {
-                using (StreamReader sr = new StreamReader(stream))
+                var assembly = Assembly.GetExecutingAssembly();
+                using (Stream stream = assembly.GetManifestResourceStream("AppMobile.CommonResources." + ruta))
+                {
+                    using (StreamReader sr = new StreamReader(stream))
+                    {
+                        for (int i = 1; i < nivel; ++i)
+                            sr.ReadLine();
+
+                        letras = sr.ReadLine().Split();
+                        _categoriaPalabras = letras[0];
+                        datos = new string[letras.Length - 1];
+                        Array.Copy(letras, 1, datos, 0, letras.Length - 1);
+                        letras = null;
+                    }//using
+                }//using
+            }
+            else
+            {
+                ruta = Path.Combine(Constantes.folderPath, ruta);
+                using (StreamReader sr = new StreamReader(ruta))
                 {
                     for (int i = 1; i < nivel; ++i)
                         sr.ReadLine();
@@ -175,7 +194,7 @@ namespace AppMobile.Model
                     Array.Copy(letras, 1, datos, 0, letras.Length - 1);
                     letras = null;
                 }//using
-            }//using
+            }
 
             if (datos != null && nivel > 0 && nivel < 7)
             {
@@ -200,7 +219,7 @@ namespace AppMobile.Model
                     else if (total == 0)
                         break;
                 }//for i
-                
+
                 //ordenar por tamaño
                 Ordenar(letras, toltL);
                 for (int i = 0; i < letras.Length; i++) //copiar en la lista de palabras las letras
@@ -278,10 +297,11 @@ namespace AppMobile.Model
             {
                 good = false;
             }//else
-        }//contructor
+        }
 
-        public ref char [][] GetMatriz() { return ref _matriz; }
+        public ref char[][] GetMatriz() { return ref _matriz; }
         public string GetCategoriaPalabras() { return _categoriaPalabras; }
         public List<Palabra> GetPalabras() { return _palabras; }
-    }//class matriz
+
+    }
 }

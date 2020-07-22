@@ -12,9 +12,8 @@ namespace AppMobile.Model
 
         public Tablero(int nivel, int lista)
         {
-            lista = 1;
             Inicializar(nivel, lista);
-        }//public Tablero(int nivel, int lista)
+        }
 
         public void Inicializar(int nivel, int lista)
         {
@@ -25,18 +24,17 @@ namespace AppMobile.Model
             _palabras = mapa.GetPalabras();
             _categoriaPalabras = mapa.GetCategoriaPalabras();
             _palabras.TrimExcess();
-            mapa = null;
-        }//public void Reiniciar(int nivel, int lista)
+        }
 
         public string GetCategoriaPalabras() { return _categoriaPalabras; }
         public int GetTamanyoLista() { return _palabras.Count; }
-        
+
         public Palabra GetPalabra(int i)
         {
             if (i < 0 || i > (_palabras.Count - 1))
                 return null;
             return _palabras[i];
-        }//public string GetPalabra(int i)
+        }
 
         public Palabra GetPalabraActiva()
         {
@@ -52,6 +50,7 @@ namespace AppMobile.Model
                 ++i;
             }
             return pal;
-        }//public Palabra GetPalabraActiva()
-    }//class Tablero
+        }
+
+    }
 }

@@ -2,78 +2,60 @@
 {
     class Palabra
     {
-        private int i, j, dir;
         public bool activo;
-        private readonly string _texto;
-
-        public string Texto
-        {
-            get { return _texto; }
-        }
-
-        public int I
-        {
-            get { return i; }
-        }
-
-        public int J
-        {
-            get { return j; }
-        }
-
-        public int Direccion
-        {
-            get { return dir; }
-        }
+        public string Texto { get; }
+        public int I { get; private set; }
+        public int J { get; private set; }
+        public int Direccion { get; private set; }
 
 
         public Palabra(string text, int ii, int jj)
         {
-            i = ii;
-            j = jj;
+            I = ii;
+            J = jj;
             activo = true;
-            _texto = text;
+            Texto = text;
         }
 
         public Palabra(string text)
         {
-            i = 0;
-            j = 0;
+            I = 0;
+            J = 0;
             activo = true;
-            _texto = text;
+            Texto = text;
         }
 
         public void Posicion(int ii, int jj, int di)
         {
-            i = ii;
-            j = jj;
-            dir = di;
+            I = ii;
+            J = jj;
+            Direccion = di;
         }
 
         public static bool operator ==(Palabra a, Palabra b)
         {
-            
-            if ((ReferenceEquals(a, null) && !ReferenceEquals(b, null)) ||
-               (!ReferenceEquals(a, null) && ReferenceEquals(b, null)))
+
+            if ((a is null && b is object) ||
+               (a is object && b is null))
             {
                 return false;
             }
-                
+
             if (ReferenceEquals(a, b))
                 return true;
 
-            if (a.activo && string.Equals(a._texto, b._texto))
+            if (a.activo && string.Equals(a.Texto, b.Texto))
             {
                 //maneja casos donde se pueda generar la misma palabra dos veces
-                if (a.i != b.i)
-                    a.i = b.i;
-                if (a.j != b.j)
-                    a.j = b.j;
+                if (a.I != b.I)
+                    a.I = b.I;
+                if (a.J != b.J)
+                    a.J = b.J;
 
                 return true;
             }//if
             return false;
-        }//public static bool operator ==(Palabra a, Palabra b)
+        }
 
         public static bool operator !=(Palabra a, Palabra b)
         {
@@ -82,13 +64,13 @@
 
         public override bool Equals(object obj)
         {
-            Palabra b = (Palabra) obj;
+            Palabra b = (Palabra)obj;
             return (this == b);
         }
 
         public override int GetHashCode()
         {
-            return _texto.GetHashCode();
+            return Texto.GetHashCode();
         }
     }
 }

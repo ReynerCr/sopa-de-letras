@@ -1,41 +1,39 @@
-﻿using System;
+﻿using AppMobile.Model;
+using System;
 using System.ComponentModel;
-using AppMobile.Model;
-using Xamarin.Forms;
 using System.Diagnostics;
+using Xamarin.Forms;
 
 namespace AppMobile.ViewModels
 {
-    public sealed class Container : INotifyPropertyChanged
+    public sealed class Contenedor : INotifyPropertyChanged
     {
-        private JugadorData jugador;
-        private Configuracion configuracion;
-        private ManejadorJuego juego;
-        private readonly InstruccionesText[] instrucciones;
-        private bool _isBusy;
+        private readonly JugadorData jugador;
+        private readonly Configuracion configuracion;
+        private readonly ManejadorJuego juego;
+        private bool _isBusy; //booleano para verificar si el programa esta ocupado
 
         //INSTANCIA PARA SINGLETON-----------------------------------------------
-        private static Container _instance = null;
-        public static Container Instance
+        private static Contenedor _instance = null;
+        public static Contenedor Instance
         {
             get
             {
                 if (_instance == null)
-                    _instance = new Container();
+                    _instance = new Contenedor();
 
                 return _instance;
             }
         }//public static Configuracion Instance
 
-        private Container()
+        private Contenedor()
         {
             jugador = JugadorData.Instance;
             configuracion = Configuracion.Instance;
-            juego = ViewModels.ManejadorJuego.Instance;
-            instrucciones = new InstruccionesText[5];
-            for (int i = 0; i < 5; i++)
-                instrucciones[i] = new InstruccionesText(i);
-        }//private Container()
+            SetRutasImagenes();
+            ActualizarRutasBotones();
+            juego = ManejadorJuego.Instance;
+        }
 
 
         //MANEJAR CAMBIO DE PROPIEDADES----------------------------------------
@@ -43,14 +41,15 @@ namespace AppMobile.ViewModels
         void OnPropertyChanged(string nombreVar)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nombreVar));
-        }//void OnPropertyChanged(string nombreVar)
+        }
 
 
         //INDICADOR DE ACTIVIDAD
         public bool IsBusy
         {
             get { return _isBusy; }
-            set {
+            set
+            {
                 if (_isBusy != value)
                 {
                     _isBusy = value;
@@ -60,17 +59,21 @@ namespace AppMobile.ViewModels
         }
 
         //CONFIGURACION--------------------------------------------------------
+
+        //Colores para temas
         public string MainMenuBkgColor { get { return configuracion.MainMenuBkgColor; } }
         public string CharColorAndSecondaryBkg { get { return configuracion.CharColorAndSecondaryBkg; } }
         public string CharColorInSecondaryBkg { get { return configuracion.CharColorInSecondaryBkg; } }
         public string CharColorInAlerts { get { return configuracion.CharColorInAlerts; } }
+
         public int Estilo { get { return configuracion.Estilo; } }
         public bool Temporizador { get { return configuracion.Temporizador; } }
         public int EstiloPalabras { get { return configuracion.EstiloPalabras; } }
-       
+
         public void CambiarColores()
         {
             configuracion.CambiarColores();
+            ActualizarRutasBotones();
             OnPropertyChanged(nameof(MainMenuBkgColor));
             OnPropertyChanged(nameof(CharColorAndSecondaryBkg));
             OnPropertyChanged(nameof(CharColorInSecondaryBkg));
@@ -97,7 +100,7 @@ namespace AppMobile.ViewModels
                     break;
             }
             return estilo;
-        }//private string EstiloAsText()
+        }
 
         private string EstiloPalabrasAsText()
         {
@@ -108,22 +111,22 @@ namespace AppMobile.ViewModels
                     estilo = "clásico";
                     break;
                 default:
-                    estilo = "ficción";
+                    estilo = "empresas";
                     break;
             }
             return estilo;
-        }//private string EstiloPalabrasAsText()
+        }
 
         public void AlternarTemporizador()
         {
             configuracion.AlternarTemporizador();
             OnPropertyChanged(nameof(DisplayTemporizador));
-        }//public void AlternarTemporizador()
+        }
 
         public string DisplayEstilo => $"Estilo: {EstiloAsText()}";
-        public string DisplayEstiloPalabras => $"Estilo de las palabras: {EstiloPalabrasAsText()}";
+        public string DisplayEstiloPalabras => $"Palabras a buscar: {EstiloPalabrasAsText()}";
         public string DisplayTemporizador => "Temporizador: " + ((configuracion.Temporizador) ? "sí" : "no");
-        public bool GuardarConfigs() { return configuracion.GuardarConfigs();  }//public bool GuardarConfigs()
+        public bool GuardarConfigs() { return configuracion.GuardarConfigs(); }//public bool GuardarConfigs()
 
 
         //JUGADOR------------------------------------------------------------
@@ -138,7 +141,8 @@ namespace AppMobile.ViewModels
         public int Nivel
         {
             get { return jugador.Nivel; }
-            set { 
+            set
+            {
                 if (jugador.Nivel != value)
                 {
                     jugador.Nivel = value;
@@ -152,14 +156,48 @@ namespace AppMobile.ViewModels
             set { jugador.Tiempo = value; }
         }
 
-        public bool GuardarProgreso() {  return jugador.GuardarProgreso(); }
-        public bool EliminarProgreso() {  return jugador.EliminarProgreso(); }
+        public bool GuardarProgreso() { return jugador.GuardarProgreso(); }
+        public bool EliminarProgreso() { return jugador.EliminarProgreso(); }
 
 
-        //INSTRUCCIONES--------------------------------------------------------
-        public InstruccionesText[] TextoInstrucciones
+        //IMAGENES-------------------------------------------------------------
+        private void SetRutasImagenes()
         {
-            get { return instrucciones; }
+            BotonAyuda = "boton_ayuda.png";
+            BotonConfigs = "boton_configs.png";
+            BotonFlecha = "boton_flecha.png";
+            CuadroPuntaje = "cuadro_puntaje.png";
+            CuadroTiempo = "cuadro_tiempo.png";
+
+            if (Device.RuntimePlatform == Device.GTK)
+            {
+                BotonAyuda = "Images/" + BotonAyuda;
+                BotonConfigs = "Images/" + BotonConfigs;
+                BotonFlecha = "Images/" + BotonFlecha;
+                CuadroPuntaje = "Images/" + CuadroPuntaje;
+                CuadroTiempo = "Images/" + CuadroTiempo;
+            }
+        }
+
+        public string BotonAyuda { get; private set; }
+        public string BotonConfigs { get; private set; }
+        public string BotonFlecha { get; private set; }
+        public string CuadroPuntaje { get; private set; }
+        public string CuadroTiempo { get; private set; }
+        public string BotonLimpiar { get; private set; }
+        public string BotonComprobar { get; private set; }
+
+        private void ActualizarRutasBotones()
+        {
+            int estilo = Estilo;
+            BotonLimpiar = "limpiar" + estilo + ".png";
+            BotonComprobar = "comprobar" + estilo + ".png";
+
+            if (Device.RuntimePlatform == Device.GTK)
+            {
+                BotonLimpiar = "Images/" + BotonLimpiar;
+                BotonComprobar = "Images/" + BotonComprobar;
+            }
         }
 
 
@@ -173,15 +211,16 @@ namespace AppMobile.ViewModels
             if (cambio) //cambio de nivel
             {
                 PararTemporizador();
-                Tiempo += getTiempoSegundos();
+                Tiempo += GetTiempoSegundos();
                 ++Nivel;
                 return true;
             }
             return false;
-        }//public bool AumentarPuntuacion()
+        }
+
 
         //TEMPORIZADOR---------------------------------------------------------
-        private Stopwatch stopwatch = new Stopwatch();
+        private readonly Stopwatch stopwatch = new Stopwatch();
         private string _tiempoMedido = "00:00";
         public string DisplayTiempoActual => $"{_tiempoMedido}";
         public void IniciarTemporizador()
@@ -201,7 +240,8 @@ namespace AppMobile.ViewModels
                 }//lambda expression
                 );//Device.StartTimer
             }//if
-        }//public void IniciarTemporizador()
+        }
+
         public void PararTemporizador() { stopwatch.Stop(); }
         public void ReiniciarTemporizador()
         {
@@ -209,12 +249,13 @@ namespace AppMobile.ViewModels
             _tiempoMedido = "00:00";
         }
 
-        public int getTiempoSegundos()
+        public int GetTiempoSegundos()
         {
             if (stopwatch.IsRunning)
                 return -1;
-            String []l = _tiempoMedido.Split(':');
+            String[] l = _tiempoMedido.Split(':');
             return (int.Parse(l[0]) * 60) + (int.Parse(l[1]));
         }
-    }//class Container
+
+    }
 }

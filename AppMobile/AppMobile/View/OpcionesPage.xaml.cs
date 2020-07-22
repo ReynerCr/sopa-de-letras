@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AppMobile.ViewModels;
+using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -7,7 +8,7 @@ namespace AppMobile.View
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class OpcionesPage : ContentPage
     {
-        readonly ViewModels.Container contenedor = ViewModels.Container.Instance;
+        readonly Contenedor contenedor = Contenedor.Instance;
 
         public OpcionesPage()
         {
@@ -16,7 +17,6 @@ namespace AppMobile.View
 
         protected override void OnAppearing()
         {
-            Volver.Source = ImageSource.FromResource("AppMobile.Resources.boton_flecha.png");
             if (contenedor.Tiempo != 0)
                 Temporizador.IsEnabled = false;
             base.OnAppearing();
@@ -34,14 +34,20 @@ namespace AppMobile.View
 
         private void EstiloPalabras_Clicked(object sender, EventArgs e)
         {
-            EstiloPalabras.Text = "Aún no implementado.";
-            //contenedor.CambiarEstiloPalabras();
+            contenedor.CambiarEstiloPalabras();
+            EstiloPalabras.Text = contenedor.DisplayEstiloPalabras;
         }
 
         private async void Volver_Clicked(object sender, EventArgs e)
         {
-            contenedor.GuardarConfigs(); //debe mostrar un mensaje si no pudo guardar
-            await Navigation.PopAsync();
+            if (!contenedor.IsBusy)
+            {
+                contenedor.IsBusy = true;
+                contenedor.GuardarConfigs();
+                await Navigation.PopAsync();
+                contenedor.IsBusy = false;
+            }
         }
-    }//partial class OpcionesPage
+
+    }
 }

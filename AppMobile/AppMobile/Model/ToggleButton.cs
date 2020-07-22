@@ -13,7 +13,6 @@ namespace AppMobile.Model
 
         public ToggleButton()
         {
-            //Clicked += (sender, args) => IsToggled ^= true;
         }
 
         public void AltToggle()
